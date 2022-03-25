@@ -66,7 +66,8 @@ export default function AppIndex() {
         setProfileError(name);
         setCreatingSite(false);
       } else {
-        toast.error("Failed to create profile", e.message);
+        toast.error("Failed to Create Profile", e.message);
+        setCreatingSite(false);
       }
 
       return;

@@ -5,6 +5,9 @@ import { useState, useEffect, useCallback } from "react";
 import Cookies from "js-cookie";
 
 import type { Meta, WithChildren } from "@/types";
+import { follow } from "@/lib/follow";
+import { useAccount, useConnect } from "wagmi";
+import toast, { Toaster } from "react-hot-toast";
 
 interface LayoutProps extends WithChildren {
   meta?: Meta;
@@ -14,6 +17,8 @@ interface LayoutProps extends WithChildren {
 
 export default function Layout({ meta, children, subdomain }: LayoutProps) {
   const [scrolled, setScrolled] = useState(false);
+  const [{ data, error }, connect] = useConnect();
+  const [{ data: accountData }, disconnect] = useAccount({ fetchEns: true });
 
   const onScroll = useCallback(() => {
     setScrolled(window.pageYOffset > 20);
@@ -36,6 +41,14 @@ export default function Layout({ meta, children, subdomain }: LayoutProps) {
     }
   }, [closeModal]);
 
+  const onFollow = async (userId:string) => {
+    try {
+      await follow(userId);
+    } catch (e: any) {
+      toast.error('Follow Error' + e.message);
+    }
+   
+  }
   return (
     <div>
       <Head>
@@ -68,9 +81,9 @@ export default function Layout({ meta, children, subdomain }: LayoutProps) {
       </Head>
       <div
         className={`fixed w-full ${scrolled ? "drop-shadow-md" : ""
-          }  top-0 left-0 right-0 h-16 bg-white z-30 transition-all ease duration-150 flex`}
+          }  top-0 left-0 right-0 h-16 bg-white z-30 transition-all ease duration-150 flex justify-between items-center px-4 sm:px-20 max-w-4xl mx-auto`}
       >
-        <div className="flex justify-center items-center space-x-5 h-full max-w-screen-xl mx-auto px-10 sm:px-20">
+        <div className="flex justify-center items-center space-x-5 h-full">
           <Link href="/" passHref>
             <a className="flex justify-center items-center">
               {meta?.logo && (
@@ -89,6 +102,26 @@ export default function Layout({ meta, children, subdomain }: LayoutProps) {
             </a>
           </Link>
         </div>
+        {     
+        accountData ? 
+          <button
+            onClick={() => onFollow(meta?.userId)}
+            className="inline-block font-cal tracking-wide text-white bg-black border-black border-2 px-2 py-1 hover:bg-white hover:text-black transition-all ease-in-out duration-150"
+            >
+              Follow
+            </button> :
+            <button
+              onClick={() => {
+                connect(data.connectors[0]);
+              }}
+              className="inline-block font-cal tracking-wide text-white bg-black border-black border-2 px-2 py-1 hover:bg-white hover:text-black transition-all ease-in-out duration-150"
+            >
+              <span className="text-base text-gray-200">
+                MetaMask
+              </span>
+            </button>
+          }
+       
       </div>
 
       <div className="mt-20">{children}</div>
@@ -159,6 +192,7 @@ export default function Layout({ meta, children, subdomain }: LayoutProps) {
           </div>
         </div>
       )}
+      <Toaster/>
     </div>
   );
 }
