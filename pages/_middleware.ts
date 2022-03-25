@@ -42,7 +42,7 @@ export default function middleware(req: NextRequest) {
       return NextResponse.rewrite(url);
     }
 
-    if (hostname === "localhost:3000") {
+    if (hostname === "localhost:3000" || hostname === "punk3.xyz") {
       url.pathname = `/home`;
       return NextResponse.rewrite(url);
     }
