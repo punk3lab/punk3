@@ -48,8 +48,8 @@ export default function AppIndex() {
 
   const router = useRouter();
 
-  const { data: session } = useSession();
-  const sessionId = session?.user?.id;
+  const { data: session }: any = useSession();
+  const sessionId = session?.user.id;
 
   const { data: sites } = useSWR<Array<Site>>(
     sessionId && `/api/site`,

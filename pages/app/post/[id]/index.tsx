@@ -19,6 +19,8 @@ import { HttpMethod, WithSitePost } from "@/types";
 import { server } from "config";
 import { sleep } from "@/lib/helpers";
 
+import type { ChangeEvent } from "react";
+
 interface PostData {
   title: string;
   description: string;
@@ -62,7 +64,7 @@ export default function Post() {
   // TODO: Undefined check redirects to error
   const { id: postId } = router.query;
 
-  const { data: post, isValidating } = useSWR<WithSitePost>(
+  const { data: post, isValidating }: any = useSWR<WithSitePost>(
     router.isReady && `/api/post?postId=${postId}`,
     fetcher,
     {
@@ -174,11 +176,8 @@ export default function Post() {
     try {
       // Create Post NFT
       const profile = (await profiles(
-        { handles: [post.site.name], limit: 1 },
+        { handles: [post.site.name] },
       )).items[0];
-      // const pps = await getPublications(profile.id, 1)
-      // console.log(pps)
-      // return
 
 
       const uuid = uuidv4();
@@ -243,7 +242,7 @@ export default function Post() {
           `${server(post?.site?.subdomain)}/${post?.slug}`
         );
       }
-    } catch (error) {
+    } catch (error: any) {
       toast.error("Failed to publish", error?.message)
       console.error(error);
     } finally {

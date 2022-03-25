@@ -13,7 +13,8 @@ export const truncate = (str: string, num: number) => {
   return str.slice(0, num) + "...";
 };
 
-export const shortAddress = (addr: string) => {
+export const shortAddress = (addr: string | null | undefined) => {
+  if (!addr) return "";
   return addr.slice(0, 6) + "..." + addr.slice(-4);
 };
 

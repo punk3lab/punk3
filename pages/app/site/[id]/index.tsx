@@ -23,7 +23,7 @@ interface SitePostData {
 export default function SiteIndex() {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [creatingPost, setCreatingPost] = useState(false);
-  const [profile, setProfile] = useState(null);
+  const [profile, setProfile]: any = useState(null);
 
   const router = useRouter();
   const { id: siteId } = router.query;

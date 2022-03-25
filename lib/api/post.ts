@@ -25,7 +25,7 @@ interface AllPosts {
 export async function getPost(
   req: NextApiRequest,
   res: NextApiResponse,
-  session: Session,
+  session: any, // Session
 ): Promise<void | NextApiResponse<AllPosts | (WithSitePost | null)>> {
   const { postId, siteId, published } = req.query;
 

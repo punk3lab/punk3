@@ -26,8 +26,8 @@ export default function Layout({ siteId, children }: LayoutProps) {
     ? router.asPath.split("/")[1]
     : router.asPath.split("/")[3];
 
-    const session = useRequireAuth();
-    if (!session) return <Loader />;
+  const session = useRequireAuth();
+  if (!session) return <Loader />;
 
   return (
     <>

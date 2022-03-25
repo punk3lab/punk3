@@ -19,7 +19,7 @@ import { Session } from "next-auth";
 export async function getSite(
   req: NextApiRequest,
   res: NextApiResponse,
-  session: Session,
+  session: any, // Session,
 ): Promise<void | NextApiResponse<Array<Site> | (Site | null)>> {
   const { siteId } = req.query;
 

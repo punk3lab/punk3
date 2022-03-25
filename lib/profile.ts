@@ -149,6 +149,7 @@ const getProfilesRequest = (request: ProfilesRequest) => {
     query: gql(GET_PROFILES),
     variables: {
       request,
+      limit: 20,
     },
   });
 };

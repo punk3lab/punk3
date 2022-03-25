@@ -58,7 +58,7 @@ export default function Post({
   if (router.isFallback) return <Loader />;
   const [showModal, setShowModal] = useState<boolean>(false);
 
-  const data = JSON.parse(stringifiedData) as _SiteSlugData & {
+  const data: any = JSON.parse(stringifiedData) as _SiteSlugData & {
     mdxSource: MDXRemoteSerializeResult<Record<string, unknown>>;
   };
   const adjacentPosts = JSON.parse(
@@ -302,7 +302,7 @@ export const getStaticProps: GetStaticProps<PostProps, PathProps> = async ({
   }
 
   // fetch data in db
-  const data = (await prisma.post.findFirst({
+  const data: any = (await prisma.post.findFirst({
     where: {
       site: {
         ...filter,
@@ -321,9 +321,7 @@ export const getStaticProps: GetStaticProps<PostProps, PathProps> = async ({
   if (!data) return { notFound: true, revalidate: 10 };
 
   // fetch publication from lens graphql
-  console.log(data);
   const publication = await getPublication(data.pubId);
-  console.log(publication);
 
   const [mdxSource, adjacentPosts] = await Promise.all([
     getMdxSource(data.content!),

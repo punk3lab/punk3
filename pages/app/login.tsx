@@ -14,7 +14,7 @@ const description = "punk3.xyz is a web3 blogging platform for crypto punks.";
 export default function Login() {
   const [{ data, error }, connect] = useConnect();
   const router = useRouter();
-  const { data: session } = useSession();
+  const { data: session }: any = useSession();
   const [{ data: accountData, error: aerr, loading: aloading }, disconnect] = useAccount({ fetchEns: true });
   const [loading, setLoading] = useState(false);
   const [{ data: networkData }] = useNetwork();
@@ -44,7 +44,7 @@ export default function Login() {
       console.log("signRes success", prepareMessage);
 
       // signin(verify and create user)
-      const signinRes = await signIn('credentials', { message: prepareMessage, signature: signRes.data, redirect: false });
+      const signinRes: any = await signIn('credentials', { message: prepareMessage, signature: signRes.data, redirect: false });
       if (signinRes.error) {
         toast.error("Error signin");
       } else {

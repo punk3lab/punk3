@@ -41,7 +41,8 @@ export default function Layout({ meta, children, subdomain }: LayoutProps) {
     }
   }, [closeModal]);
 
-  const onFollow = async (userId: string) => {
+  const onFollow = async (userId: string | undefined) => {
+    if (!userId) return;
     try {
       await follow(userId);
     } catch (e: any) {

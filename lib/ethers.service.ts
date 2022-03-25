@@ -9,7 +9,7 @@ import { omit } from "./helpers";
 export const getSigner = () => {
   if (typeof window === "undefined") {
     // server side
-    const privateKey = process.env.PRIVATE_KEY;
+    const privateKey: any = process.env.PRIVATE_KEY;
     const provider = new ethers.providers.JsonRpcProvider(
       process.env.POLYGON_RPC,
     );
@@ -17,7 +17,8 @@ export const getSigner = () => {
     return singer;
   } else {
     // client side
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const p: any = window.ethereum;
+    const provider = new ethers.providers.Web3Provider(p);
     return provider.getSigner();
   }
 };

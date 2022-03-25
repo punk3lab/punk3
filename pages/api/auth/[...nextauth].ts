@@ -16,7 +16,7 @@ export const authOptions = {
       async authorize(credentials) {
         // verify signature
         try {
-          const { message, signature } = credentials;
+          const { message, signature }: any = credentials;
           const siweMessage = new SiweMessage(message);
           const fields = await siweMessage.validate(signature);
           // create user
@@ -37,7 +37,7 @@ export const authOptions = {
             name: address,
             email: "fsdfds@gmail.com",
           };
-        } catch (error) {
+        } catch (error: any) {
           throw new Error(error.response.data.msg);
         }
       },
@@ -56,7 +56,7 @@ export const authOptions = {
       }
       return token;
     },
-    session: ({ session, token }) => {
+    session: ({ session, token }: any) => {
       session.user = token.user;
       return session;
     },
