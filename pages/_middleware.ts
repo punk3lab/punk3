@@ -17,17 +17,9 @@ export default function middleware(req: NextRequest) {
       statusText: "No hostname found in request headers",
     });
 
-  // Only for demo purposes – remove this if you want to use your root domain as the landing page
-  if (hostname === "punk3.xyz") {
-    url.pathname = "https://demo.punk3.xyz";
-    return NextResponse.redirect(url);
-  }
-
   const currentHost =
     process.env.NODE_ENV === "production" && process.env.VERCEL === "1"
-      ?
-      hostname
-        .replace(`.punk3.xyz`, "")
+      ? hostname.replace(`.punk3.xyz`, "")
       : hostname.replace(`.localhost:3000`, "");
 
   if (pathname.startsWith(`/_sites`))
