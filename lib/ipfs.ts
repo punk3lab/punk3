@@ -1,7 +1,7 @@
 import { create } from "ipfs-http-client";
-const token = btoa(
+const token = Buffer.from(
   `${process.env.NEXT_PUBLIC_INFURA_PROJECT_ID}:${process.env.NEXT_PUBLIC_INFURA_SECRET}`,
-);
+).toString("base64");
 
 const client = create({
   host: "ipfs.infura.io",
